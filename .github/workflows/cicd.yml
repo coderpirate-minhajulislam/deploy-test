@@ -1,0 +1,42 @@
+name: Deploy HTML to cPanel
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    name: Deploy HTML on every commit
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    # - name: Set up Node.js
+    #   uses: actions/setup-node@v3
+    #   with:
+    #     node-version: '18'
+
+    # - name: Install npm dependencies
+    #   run: npm install
+
+    # - name: Compile assets
+    #   run: npm run build
+
+    - name: FTP-Deploy-Action
+      uses: SamKirkland/FTP-Deploy-Action@4.3.2
+      with:
+        server: ftp.coderpirate.com
+        username: admin@coderpirate.com
+        password: Minhaz@1332
+        protocol: ftps
+        port: 21
+        local-dir: './'
+        server-dir: '/public_html/'
+        exclude: |
+          **/.git**
+          **/.git/**
+          **/node_modules/**
+          **/.**
